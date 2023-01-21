@@ -26,4 +26,8 @@ contract Answers {
         return(students[student].score);
     }
 
+    function noOfQuestions (address student) public view returns (uint) {
+        return(students[student].questions.length);
+    }
+
 }
