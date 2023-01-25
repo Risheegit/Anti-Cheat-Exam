@@ -1,14 +1,13 @@
-import React from "react";
-import StudentQuestion from "../components/StudentQuestion";
+import React from "react"
+import Navbar from "../components/Navbar"
+import StudentQuestion from "../components/StudentQuestion"
 
 const StudentView = () => {
-  return (
-    <>
-      <button className="bg-black">Connect Wallet </button>
-      <StudentQuestion />
-      <button>Next</button>
-    </>
-  );
-};
+	return (
+		<>
+			<StudentQuestion />
+		</>
+	)
+}
 
-export default StudentView;
+export default StudentView
