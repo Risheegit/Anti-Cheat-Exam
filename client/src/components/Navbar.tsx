@@ -6,6 +6,8 @@ const Navbar = () => {
 	const [provider, setProvider] =
 		useState<ethers.providers.Web3Provider | null>(null)
 	const [isConnected, setIsConnected] = useState(false)
+	const [isLoading, setIsLoading] = useState(false)
+	const [currentAccount, setCurrentAccount] = useState([])
 
 	const ethereum = (window as any).ethereum
 
@@ -26,6 +28,23 @@ const Navbar = () => {
 		}
 	}
 
+	const connectWallet = async () => {
+		try {
+			if (!ethereum) return alert("Please install metamask")
+			console.log("In connect Wallet")
+			const accounts = await ethereum.request({
+				method: "eth_requestAccounts",
+			})
+			console.log("In connect wallet", accounts)
+
+			setCurrentAccount(accounts[0])
+			window.location.reload()
+		} catch (error) {
+			console.log(error)
+			throw new Error("No ethereum object")
+		}
+	}
+
 	const getEthereumContract = () => {
 		const provider = new ethers.providers.Web3Provider(ethereum)
 		const signer = provider.getSigner()
@@ -36,6 +55,33 @@ const Navbar = () => {
 		)
 		console.log(answersContract)
 		return answersContract
+	}
+
+	interface IAddQuestion {
+		address: unknown
+		question: string
+		isCorrect: boolean
+	}
+	const addQuestion = async (props: IAddQuestion) => {
+		try {
+			if (!ethereum) return alert("Please install metamask")
+			const addressContract = getEthereumContract()
+			const temporaryObject = {
+				question: props.question,
+				isCorrect: props.isCorrect,
+			}
+			const addressHash = await addressContract.addQuestionAttempted(
+				currentAccount,
+				temporaryObject
+			)
+			setIsLoading(true)
+			console.log(`Loading - ${addressHash.hash}`)
+			await addressHash.wait()
+			setIsLoading(false)
+			console.log(`Success - ${addressHash.hash}`)
+		} catch (error) {
+			console.log(error)
+		}
 	}
 
 	return (

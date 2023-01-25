@@ -99,7 +99,7 @@ const StudentQuestion = () => {
 		setQuestionsLeft(0)
 		const endTime = new Date().getTime()
 		const timeTaken = endTime - startTime
-		timeTaken / 1000 < averageTimePerQuestion * maxQuestions
+		timeTaken / 1000 < (averageTimePerQuestion * maxQuestions) / 10
 			? setSus(true)
 			: setSus(false)
 		// console.log(`You are ${sus} sus`)

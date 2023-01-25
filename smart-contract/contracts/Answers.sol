@@ -11,6 +11,7 @@ contract Answers {
 
     struct Student {
         uint score;
+        // uint timeTaken;
         Question[] questions;
     }
 
