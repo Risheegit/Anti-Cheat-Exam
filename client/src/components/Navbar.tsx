@@ -1,17 +1,18 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { contractABI, contractAddress } from "../utils/constants"
 import { ethers } from "ethers"
+import { shortenAddress } from "../utils/shortenAddress"
 
 const Navbar = () => {
 	const [provider, setProvider] =
 		useState<ethers.providers.Web3Provider | null>(null)
 	const [isConnected, setIsConnected] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
-	const [currentAccount, setCurrentAccount] = useState([])
+	const [currentAccount, setCurrentAccount] = useState<string>("")
 
 	const ethereum = (window as any).ethereum
 
-	const checkMetaMask = async () => {
+	const checkIfWalletIsConnected = async () => {
 		console.log("In checkMetaMask")
 		if (ethereum) {
 			const newProvider = new ethers.providers.Web3Provider(ethereum)
@@ -19,7 +20,6 @@ const Navbar = () => {
 				await ethereum.enable()
 				setProvider(newProvider)
 				console.log("MetaMask is connected!")
-				setIsConnected(true)
 			} catch (err) {
 				console.log("User denied access to MetaMask.")
 			}
@@ -28,7 +28,12 @@ const Navbar = () => {
 		}
 	}
 
+	useEffect(() => {
+		checkIfWalletIsConnected()
+	}, [])
+
 	const connectWallet = async () => {
+		console.log("In connect wallet")
 		try {
 			if (!ethereum) return alert("Please install metamask")
 			console.log("In connect Wallet")
@@ -38,7 +43,8 @@ const Navbar = () => {
 			console.log("In connect wallet", accounts)
 
 			setCurrentAccount(accounts[0])
-			window.location.reload()
+			setIsConnected(true)
+			// window.location.reload()
 		} catch (error) {
 			console.log(error)
 			throw new Error("No ethereum object")
@@ -89,10 +95,12 @@ const Navbar = () => {
 			<div className="flex m-8 mb-16">
 				<button
 					type="submit"
-					className="rounded bg-gray-500 text-xl text-white py-2 px-4 mt-3 mr-6"
-					onClick={checkMetaMask}
+					className="rounded flex flex-col bg-gray-500 text-xl text-white py-2 px-4 mt-3 mr-6"
+					onClick={connectWallet}
 				>
-					{isConnected ? "Connected" : "Connect Wallet"}
+					{isConnected
+						? `Connected ${shortenAddress(currentAccount)}`
+						: "Connect Wallet"}
 				</button>
 			</div>
 		</div>
