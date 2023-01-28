@@ -7,10 +7,12 @@ contract Answers {
     struct Question {
         string question;
         bool isCorrect;
+        bool isBlank;
     }
 
     struct Student {
         uint score;
+        uint blankQuestions;
         uint timeTaken;
         bool sus;
         Question[] questions;
@@ -31,6 +33,13 @@ contract Answers {
     function noOfQuestions (address student) public view returns (uint) {
         return(students[student].questions.length);
     }
+
+    // function noOfQuestionsAttempted (address student ) public view returns (uint) {
+    // for (uint i = 0; i < students[student].questions.length; i++) {
+    //     students[student].questions.isBlank ? students[student].blankQuestions++ : students[student].blankQuestions;
+    //     }
+    //     return(students[student].questions.blankQuestions);
+    // }
 
     function addTime (address student, uint timeTaken, bool sus) public {
         students[student].timeTaken = timeTaken;

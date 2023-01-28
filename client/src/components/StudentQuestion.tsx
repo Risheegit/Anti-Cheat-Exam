@@ -33,6 +33,7 @@ const StudentQuestion = () => {
 	const [sus, setSus] = useState(false)
 	const [optionArray, setOptionArray] = useState<String[]>([])
 	const [currentAccount, setCurrentAccount] = useState("")
+	const [selectedOption, setSelectedOption] = useState(null)
 
 	useEffect(() => {
 		const loadData = async () => {
@@ -104,45 +105,45 @@ const StudentQuestion = () => {
 	}
 
 	//TO view changes in finalquestions
-	useEffect(() => {
-		console.log("Final questions changed", finalQuestions)
-		console.log("Length is ", finalQuestions.length)
-	}, [finalQuestions])
+	// useEffect(() => {
+	// 	// console.log("Final questions changed", finalQuestions)
+	// 	// console.log("Length is ", finalQuestions.length)
+	// }, [finalQuestions])
 
 	const handleClick = () => {
-		console.log(questionsLeft)
+		console.log("No of questions are : ", questionsLeft)
 
-		questionsLeft > 0 ? setQuestionsLeft(questionsLeft - 1) : submit()
+		questionsLeft > 1 ? setQuestionsLeft(questionsLeft - 1) : submit()
 		// addQuestion({
 		// 	address: currentAccount,
 		// 	question: questionObject?.question,
 		// 	isCorrect,
 		// })
-		console.log("Current account is ", currentAccount)
-		console.log("Question is ", questionObject?.question)
-		console.log("Current state is ", isCorrect)
+		// console.log("Current account is ", currentAccount)
+		// console.log("Question is ", questionObject?.question)
+		// console.log("Current state is ", isCorrect)
 		finalQuestions.push({
 			question: questionObject?.question,
 			isCorrect,
 		})
-		console.log(finalQuestions)
+		// console.log(finalQuestions)
 		setFinalQuestions([...finalQuestions])
 	}
 
 	const submit = async () => {
-		setQuestionsLeft(0)
+		// setQuestionsLeft(0)
 		const endTime = new Date().getTime()
 		const timeTaken = endTime - startTime
 		timeTaken / 1000 < (averageTimePerQuestion * maxQuestions) / 10
 			? setSus(true)
 			: setSus(false)
 		console.log("In submit", finalQuestions)
-		// await addFinal({
-		// 	address: currentAccount,
-		// 	finalQuestions: finalQuestions,
-		// 	timeTaken: timeTaken,
-		// 	sus: sus,
-		// })
+		await addFinal({
+			address: currentAccount,
+			finalQuestions: finalQuestions,
+			timeTaken: timeTaken,
+			sus: sus,
+		})
 		console.log("Current account before submit", currentAccount)
 		await viewScore({ address: currentAccount })
 		console.log(`You are ${sus} sus`)
@@ -220,6 +221,22 @@ const StudentQuestion = () => {
 			setCurrentAccount(location.state.currentAccount)
 	}, [location.state.currentAccount])
 
+	const handleRadioChange = async (e: any) => {
+		setSelectedOption(e.target.value)
+	}
+	useEffect(() => {
+		console.log(selectedOption)
+		if (selectedOption) {
+			selectedOption == correctOption
+				? setIsCorrect(true)
+				: setIsCorrect(false)
+		}
+	}, [selectedOption])
+
+	useEffect(() => {
+		console.log("QUetsions left are ", questionsLeft)
+	}, [questionsLeft])
+
 	return (
 		<div className="bg-black  flex flex-col justify-center w-full h-screen items-center">
 			{/* <Navbar onValueChange={setCurrentAccount} /> */}
@@ -228,7 +245,7 @@ const StudentQuestion = () => {
 				<div className=" flex flex-row text-white text-3xl p-4 ">
 					<p className="pr-2">
 						Q
-						{maxQuestions - questionsLeft + 1 > 0
+						{questionsLeft
 							? maxQuestions - questionsLeft + 1
 							: maxQuestions}
 						.
@@ -240,7 +257,8 @@ const StudentQuestion = () => {
 					<input
 						type="radio"
 						name="group1"
-						onChange={() => {}}
+						value={optionArray[0]?.toString()}
+						onChange={handleRadioChange}
 						required
 						className="mx-4 mb-1 mt-1 p-2 border-none rounded"
 					/>
@@ -251,7 +269,8 @@ const StudentQuestion = () => {
 					<input
 						type="radio"
 						name="group1"
-						onChange={() => {}}
+						value={optionArray[1]?.toString()}
+						onChange={handleRadioChange}
 						required
 						className="mx-4 mb-1 mt-1 p-2 border-none rounded-full"
 					/>
@@ -262,7 +281,8 @@ const StudentQuestion = () => {
 					<input
 						type="radio"
 						name="group1"
-						onChange={() => {}}
+						value={optionArray[2]?.toString()}
+						onChange={handleRadioChange}
 						required
 						className="mx-4 mb-1 mt-1 p-2 border-none rounded"
 					/>
@@ -273,7 +293,8 @@ const StudentQuestion = () => {
 					<input
 						type="radio"
 						name="group1"
-						onChange={() => {}}
+						value={optionArray[3]?.toString()}
+						onChange={handleRadioChange}
 						required
 						className="mx-4 mb-1 mt-1 p-2 border-none rounded"
 					/>
@@ -286,7 +307,7 @@ const StudentQuestion = () => {
 						className="rounded bg-gray-500 text-xl text-white py-2 px-4 mt-3 mr-6"
 						onClick={handleClick}
 					>
-						{questionsLeft ? "Next" : "Submit"}
+						{questionsLeft - 1 ? "Next" : "Submit"}
 					</button>
 				</div>
 			</div>
