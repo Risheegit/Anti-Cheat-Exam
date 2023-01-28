@@ -12,11 +12,11 @@ function App() {
 	return (
 		<BrowserRouter>
 			<Routes>
-				<Route path="/welcome" element={<Welcome />} />
+				<Route path="/" element={<Welcome />} />
 				<Route path="/score" element={<Scorecard />} />
 				<Route path="/add" element={<AddQuestion />} />
 				<Route path="/view" element={<ViewQuestions />} />
-				<Route path="/" element={<StudentView />} />
+				<Route path="/questions" element={<StudentView />} />
 			</Routes>
 		</BrowserRouter>
 	)

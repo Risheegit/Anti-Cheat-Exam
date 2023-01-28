@@ -7,7 +7,7 @@ const Welcome = () => {
 	const [currentAccount, setCurrentAccount] = useState("")
 
 	const proceed = () => {
-		navigate("/", { state: { currentAccount } })
+		navigate("/questions", { state: { currentAccount } })
 	}
 	return (
 		<div className="bg-black  flex flex-col w-full h-screen items-center">

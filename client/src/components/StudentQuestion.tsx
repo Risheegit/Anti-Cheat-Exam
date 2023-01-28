@@ -146,8 +146,9 @@ const StudentQuestion = () => {
 		})
 		console.log("Current account before submit", currentAccount)
 		await viewScore({ address: currentAccount })
+		await noOfQuestions({ address: currentAccount })
 		console.log(`You are ${sus} sus`)
-		// navigate("/")
+		navigate("/score")
 	}
 
 	// currentAccount ? console.log(currentAccount) : ""
@@ -208,7 +209,25 @@ const StudentQuestion = () => {
 			const score = await addressContract.viewScore(address)
 			// console.log(address)
 			setIsLoading(true)
-			console.log("Your score is ", score)
+			console.log("Your score is ", score.toNumber())
+			setIsLoading(false)
+		} catch (error: any) {
+			console.log(error.message)
+		}
+	}
+
+	const noOfQuestions = async (props: IScoreProps) => {
+		try {
+			if (!ethereum) return alert("Please install metamask")
+			const addressContract = getEthereumContract()
+			console.log(addressContract)
+			// console.log("In view score", currentAccount)
+			// console.log("Props.address ", props.address)
+			const address = ethers.utils.getAddress(props.address)
+			const no = await addressContract.noOfQuestions(address)
+			// console.log(address)
+			setIsLoading(true)
+			console.log("No of questions is ", no.toString())
 			setIsLoading(false)
 		} catch (error) {
 			console.log(error)
