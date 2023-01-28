@@ -3,6 +3,8 @@ import AddQuestion from "./pages/AddQuestion"
 import { Route, Routes, BrowserRouter } from "react-router-dom"
 import ViewQuestions from "./pages/ViewAllQuestions"
 import StudentView from "./pages/StudentView"
+import Scorecard from "./pages/Scorecard"
+import Welcome from "./pages/Welcome"
 
 function App() {
 	const [count, setCount] = useState(0)
@@ -10,6 +12,8 @@ function App() {
 	return (
 		<BrowserRouter>
 			<Routes>
+				<Route path="/welcome" element={<Welcome />} />
+				<Route path="/score" element={<Scorecard />} />
 				<Route path="/add" element={<AddQuestion />} />
 				<Route path="/view" element={<ViewQuestions />} />
 				<Route path="/" element={<StudentView />} />

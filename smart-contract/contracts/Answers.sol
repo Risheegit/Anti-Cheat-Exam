@@ -11,7 +11,8 @@ contract Answers {
 
     struct Student {
         uint score;
-        // uint timeTaken;
+        uint timeTaken;
+        bool sus;
         Question[] questions;
     }
 
@@ -29,6 +30,26 @@ contract Answers {
 
     function noOfQuestions (address student) public view returns (uint) {
         return(students[student].questions.length);
+    }
+
+    function addTime (address student, uint timeTaken, bool sus) public {
+        students[student].timeTaken = timeTaken;
+        students[student].sus = sus;
+    }
+
+    function checkStatus (address student) public view returns (bool){
+        return (students[student].sus);
+    }
+
+    function addFinal (address student, Question[] memory questions, uint timeTaken, bool sus) public {
+        for (uint i = 0; i < questions.length; i++) {
+        Question memory question = questions[i];
+        question.isCorrect ? students[student].score++ : students[student].score;
+        students[student].questions.push(question);
+        }
+        students[student].timeTaken = timeTaken;
+        students[student].sus = sus;
+    
     }
 
 }
