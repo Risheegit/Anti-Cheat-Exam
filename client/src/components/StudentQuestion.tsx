@@ -16,6 +16,8 @@ const StudentQuestion = () => {
 	const navigate = useNavigate()
 	const [startTime, setStartTime] = useState(0)
 	const [questionsLeft, setQuestionsLeft] = useState(maxQuestions)
+	const [finalScore, setFinalScore] = useState(0)
+	const [numberQuestions, setNumberQuestions] = useState(0)
 	// const [questionArray, setQuestionArray] = useState<IQuestion[] | null>([])
 	const questionArray: IQuestion[] = []
 	const [finalQuestions, setFinalQuestions] = useState<IFinalQuestion[]>([])
@@ -111,7 +113,7 @@ const StudentQuestion = () => {
 	// }, [finalQuestions])
 
 	const handleClick = () => {
-		console.log("No of questions are : ", questionsLeft)
+		// console.log("No of questions are : ", questionsLeft)
 
 		questionsLeft > 1 ? setQuestionsLeft(questionsLeft - 1) : submit()
 		// addQuestion({
@@ -137,7 +139,7 @@ const StudentQuestion = () => {
 		timeTaken / 1000 < (averageTimePerQuestion * maxQuestions) / 10
 			? setSus(true)
 			: setSus(false)
-		console.log("In submit", finalQuestions)
+		// console.log("In submit", finalQuestions)
 		await addFinal({
 			address: currentAccount,
 			finalQuestions: finalQuestions,
@@ -147,8 +149,11 @@ const StudentQuestion = () => {
 		console.log("Current account before submit", currentAccount)
 		await viewScore({ address: currentAccount })
 		await noOfQuestions({ address: currentAccount })
-		console.log(`You are ${sus} sus`)
-		navigate("/score")
+		// console.log(`You are ${sus} sus`)
+		console.log("Values sent are", finalScore, numberQuestions)
+		navigate("/score", {
+			state: { currentAccount, finalScore, numberQuestions },
+		})
 	}
 
 	// currentAccount ? console.log(currentAccount) : ""
@@ -211,10 +216,16 @@ const StudentQuestion = () => {
 			setIsLoading(true)
 			console.log("Your score is ", score.toNumber())
 			setIsLoading(false)
+			setFinalScore(score.toNumber())
+			console.log("Fina Score is ", finalScore)
 		} catch (error: any) {
 			console.log(error.message)
 		}
 	}
+
+	useEffect(() => {
+		console.log("The number of questions are ", numberQuestions)
+	}, [numberQuestions])
 
 	const noOfQuestions = async (props: IScoreProps) => {
 		try {
@@ -222,13 +233,17 @@ const StudentQuestion = () => {
 			const addressContract = getEthereumContract()
 			console.log(addressContract)
 			// console.log("In view score", currentAccount)
-			// console.log("Props.address ", props.address)
+			// console.log("Props.address ", props.address)gate
 			const address = ethers.utils.getAddress(props.address)
 			const no = await addressContract.noOfQuestions(address)
 			// console.log(address)
 			setIsLoading(true)
-			console.log("No of questions is ", no.toString())
+			console.log("No of questions is ", no.toNumber())
+			console.log("Number to number is ", no.toNumber())
+			const desiredNo = no.toNumber()
 			setIsLoading(false)
+			setNumberQuestions(desiredNo)
+			console.log("The Number Questions", numberQuestions)
 		} catch (error) {
 			console.log(error)
 		}
@@ -244,7 +259,7 @@ const StudentQuestion = () => {
 		setSelectedOption(e.target.value)
 	}
 	useEffect(() => {
-		console.log(selectedOption)
+		// console.log(selectedOption)
 		if (selectedOption) {
 			selectedOption == correctOption
 				? setIsCorrect(true)
@@ -252,9 +267,9 @@ const StudentQuestion = () => {
 		}
 	}, [selectedOption])
 
-	useEffect(() => {
-		console.log("QUetsions left are ", questionsLeft)
-	}, [questionsLeft])
+	// useEffect(() => {
+	// 	console.log("QUetsions left are ", questionsLeft)
+	// }, [questionsLeft])
 
 	return (
 		<div className="bg-black  flex flex-col justify-center w-full h-screen items-center">
@@ -326,7 +341,12 @@ const StudentQuestion = () => {
 						className="rounded bg-gray-500 text-xl text-white py-2 px-4 mt-3 mr-6"
 						onClick={handleClick}
 					>
-						{questionsLeft - 1 ? "Next" : "Submit"}
+						{/* {questionsLeft - 1 ? "Next" : "Submit"} */}
+						{isLoading
+							? "Loading"
+							: questionsLeft - 1
+							? "Next"
+							: "Submit"}
 					</button>
 				</div>
 			</div>
