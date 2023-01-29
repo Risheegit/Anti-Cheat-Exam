@@ -23,6 +23,7 @@ const StudentQuestion = () => {
 	// const [questionArray, setQuestionArray] = useState<IQuestion[] | null>([])
 	const questionArray: IQuestion[] = []
 	const [finalQuestions, setFinalQuestions] = useState<IFinalQuestion[]>([])
+	const [currentScore, setCurrentScore] = useState(0)
 
 	const [provider, setProvider] =
 		useState<ethers.providers.Web3Provider | null>(null)
@@ -130,9 +131,27 @@ const StudentQuestion = () => {
 			question: questionObject?.question,
 			isCorrect,
 		})
+		// for (let i = 0; 0 < i < finalQuestions.length; i++) {
+
+		// }
 		// console.log(finalQuestions)
 		setFinalQuestions([...finalQuestions])
 	}
+
+	const incrementScore = () => {
+		let newScore = currentScore
+		finalQuestions.forEach((question) => {
+			if (question.isCorrect) {
+				newScore++
+			}
+		})
+		setCurrentScore(newScore)
+		return newScore
+	}
+
+	// useEffect(() => {
+	// 	incrementScore
+	// }, [finalQuestions])
 
 	const submit = async () => {
 		// setQuestionsLeft(0)
@@ -151,6 +170,8 @@ const StudentQuestion = () => {
 		console.log("Current account before submit", currentAccount)
 		const desiredNo = await noOfQuestions({ address: currentAccount })
 		const desiredScore = await viewScore({ address: currentAccount })
+		const newScore = incrementScore()
+		console.log("Current score is ", currentScore)
 		// console.log(`You are ${sus} sus`)
 		// console.log("Desired no in submut is", desiredNo)
 		// desiredNo && setNumberQuestions(desiredNo)
@@ -163,6 +184,7 @@ const StudentQuestion = () => {
 				numberQuestions: desiredNo,
 				timeTaken,
 				maxQuestions,
+				currentScore: newScore,
 			},
 		})
 	}
@@ -232,8 +254,8 @@ const StudentQuestion = () => {
 			console.log("Your score is ", score.toNumber())
 			setIsLoading(false)
 			const desiredScore: number = score.toNumber()
-			setFinalScore(desiredScore)
-			console.log("Final Score is ", finalScore)
+			// setFinalScore(desiredScore)
+			// console.log("Final Score is ", finalScore)
 			return desiredScore
 		} catch (error: any) {
 			console.log(error.message)
