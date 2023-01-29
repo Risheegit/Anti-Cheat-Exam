@@ -1,42 +1,3 @@
-<!-- Github: https://github.com/Risheegit/Anti-Cheat-Exam
-
-To run the file, first clone the git repository. "npm install" can be used to install all dependencies and devDependencies
-in the package. json. The command should be run separately for the client and server.
-
-To run the code: Go to client folder and run "npm run dev". Go to server folder and run "nodemon" -->
-
-<!-- Approach: The quiz system draws questions and their respective answers from a vast question bank. To maintain fairness and prevent cheating, the order of the options is randomly shuffled for each student. Additionally, the large size of the question bank reduces the chances of two students receiving the same set of questions. The quiz features a sequential navigation system (where you cannot go back to a previous question) to reduce cheating during the examination
-
-<!-- Moreover, the system allows you to customize the number of questions you need from the question bank and even set an average time limit for solving each question. The start and end times of the quiz are recorded, and any unusual spikes in performance, such as a high score in a short amount of time, are flagged as potential instances of cheating. -->
-
-Frontend (React + Typescript + Tailwind + Vite)-
-To launch the frontend, first navigate to the client folder within the cloned repository, and then execute the command "npm run dev." Before proceeding, make sure to switch to the server folder and initiate "nodemon". The frontend will be accessible through the URL http://localhost:5173, and you can start answering questions once you connect to your Metamask wallet. Note that, as answers are stored on the blockchain, having Metamask installed is a pre-requisite for the storage of your answers.
-
-Metamask functions as a browser extension and serves as your crypto wallet. Your wallet address will serve as your unique identifier. The frontend is crafted in TypeScript, a strongly-typed programming language built on top of JavaScript, which minimizes the occurrence of silly coding errors. With Tailwind CSS, HTML can be utilized to directly write CSS, offering ease of customization and a wide range of common utility patterns. In place of the default Webpack, Vite serves as a module bundler with built-in TypeScript support, providing a much faster alternative.
-
-The ethers.js package allows for seamless interaction with the Ethereum blockchain, while Axios facilitates HTTP requests from node.js. From the examiner's viewpoint, all questions can be viewed by visiting http://localhost:5173/view, while adding a question can be done by navigating to http://localhost:5173/add.
-
-Smart Contract (Solidity + Hardhat + Alchemy) - -->
-
-<!-- The smart contract was written with solidity and tested on hardhat.
-The smart contract can perform a variety of functions like automatically calculating score, finding number of questions, checking
-flagged students etc.
-
-The contract Answers has a struct Student with a unique address, score, and an object (question + whether they got it right or wrong).
-The smart contract also has functionality to add questions attempted to a student. The score is automatically calculated depending
-on the requirements of the exam (eg +3/ -1 or +1/0).
-Alchemy is a web3 development platform. Alchemy offers a massive collection of APIs for creating different types of web3 solutions
-in one place.
-
-For thorough testing, Mocha and Chai were used to evaluate the contract functions prior to compilation and deployment. The @nomicfoundation/hardhat-toolbox plugin offers a comprehensive suite of commonly used packages and Hardhat plugins. The command "npx hardhat test" is used to test the contract with the provided tests, while "npx hardhat run scripts/deploy.js --network goerli" is used to deploy the contract on the Goerli network. -->
-<!--
-Backend (Express + Node + MongoDB + Postman)- -->
-
-<!-- To run the backend, go to the server folder and run the "nodemon" command. Nodemon monitors the project directory and automatically restarts code when any changes are detected. Node.js is used to run Javascript outside the browser. Express is a Node.js application framework used for building web applications. MongoDB is a NoSQL database that is used to store our questions. Mongoose was used to design the schema of objects in MongoDB.
-Postman was used to test our APIs before integrating with our frontend.
-Rest APIs help us communicate with our backend and frontend.
-When we want to view the questions we can send a GET request to our backend. Our backend server runs on http://localhost:5000/ and we need to send GET requests to http://localhost:5000/api/question . Similarly to add questions we need to send a POST request to http://localhost:5000/api/question -->
-
 # Anti-Cheat-Exam
 
 ## Running the code
@@ -104,8 +65,9 @@ The backend is built with Express, NodeJS, Mongo DB and Postman
 Go to the server folder in your cloned repository.
 To launch the backend run the command
 
--   nodemon
-    The backend is built using Node.js, which allows you to run Javascript outside of the browser. It is powered by the Express framework, which provides a set of tools for building web applications. The questions are stored in a MongoDB NoSQL database and the schema of the objects in the database is designed using Mongoose.
+    nodemon
+
+The backend is built using Node.js, which allows you to run Javascript outside of the browser. It is powered by the Express framework, which provides a set of tools for building web applications. The questions are stored in a MongoDB NoSQL database and the schema of the objects in the database is designed using Mongoose.
 
 The API endpoints were tested using Postman before integrating with the frontend. REST APIs help communication between the backend and frontend. To view the questions, send a GET request to [http://localhost:5000/api/question]([http://localhost:5000/api/question]). To add questions, send a POST request to the same URL. Nodemon monitors the project directory and automatically restarts the code whenever changes are detected.
 
