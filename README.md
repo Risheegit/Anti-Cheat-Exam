@@ -14,9 +14,7 @@ To launch the frontend, navigate to the client folder and run
 npm run dev.
 In a separate terminal, navigate to the server folder and run
 nodemon.
-Connect to your Metamask wallet and start answering questions by visiting the URL
-
--   [http://localhost:5173](http://localhost:5173).
+Connect to your Metamask wallet and start answering questions by visiting the URL [http://localhost:5173](http://localhost:5173).
 
 ### Frontend
 
@@ -24,11 +22,11 @@ The frontend is built using React, Typescript, Tailwind, and Vite. To launch the
 
 Go to the client folder within the cloned repository and execute the command -
 
--   npm run dev
+    npm run dev
 
 Launch the server by navigating to the server folder and run
 
--   nodemon
+    nodemon
 
 Access the frontend through the URL [http://localhost:5173](http://localhost:5173)
 Connect to your Metamask wallet to start answering questions
@@ -52,11 +50,11 @@ For thorough testing, Mocha and Chai were used to evaluate the contract function
 
 To test the commands use
 
--   npx hardhat test
+    npx hardhat test
 
 To run the commands on the Goerli network use
 
--   npx hardhat run scripts/deploy.js --network goerli
+    npx hardhat run scripts/deploy.js --network goerli
 
 ### Backend
 
