@@ -18,7 +18,8 @@ const StudentQuestion = () => {
 	const [startTime, setStartTime] = useState(0)
 	const [questionsLeft, setQuestionsLeft] = useState(maxQuestions)
 	const [finalScore, setFinalScore] = useState(0)
-	const [numberQuestions, setNumberQuestions] = useState(0)
+	const [numberQuestions, setNumberQuestions] = useState<number>(0)
+	const [desiredNo, setDesiredNo] = useState(0)
 	// const [questionArray, setQuestionArray] = useState<IQuestion[] | null>([])
 	const questionArray: IQuestion[] = []
 	const [finalQuestions, setFinalQuestions] = useState<IFinalQuestion[]>([])
@@ -148,14 +149,27 @@ const StudentQuestion = () => {
 			sus: sus,
 		})
 		console.log("Current account before submit", currentAccount)
-		await viewScore({ address: currentAccount })
-		await noOfQuestions({ address: currentAccount })
+		const desiredNo = await noOfQuestions({ address: currentAccount })
+		const desiredScore = await viewScore({ address: currentAccount })
 		// console.log(`You are ${sus} sus`)
-		console.log("Values sent are", finalScore, numberQuestions)
+		// console.log("Desired no in submut is", desiredNo)
+		// desiredNo && setNumberQuestions(desiredNo)
+		// console.log("FInal numberQUestions before sending is ", numberQuestions)
+		// console.log("Values sent are", finalScore, numberQuestions)
 		navigate("/score", {
-			state: { currentAccount, finalScore, numberQuestions, timeTaken },
+			state: {
+				currentAccount,
+				finalScore: desiredScore,
+				numberQuestions: desiredNo,
+				timeTaken,
+				maxQuestions,
+			},
 		})
 	}
+
+	useEffect(() => {
+		console.log("Desire no (useEFfect)", desiredNo)
+	}, [desiredNo])
 
 	// currentAccount ? console.log(currentAccount) : ""
 	const getEthereumContract = () => {
@@ -220,6 +234,7 @@ const StudentQuestion = () => {
 			const desiredScore: number = score.toNumber()
 			setFinalScore(desiredScore)
 			console.log("Final Score is ", finalScore)
+			return desiredScore
 		} catch (error: any) {
 			console.log(error.message)
 		}
@@ -243,13 +258,19 @@ const StudentQuestion = () => {
 			console.log("No of questions is ", no.toNumber())
 			console.log("Number to number is ", no.toNumber())
 			const desiredNo: number = no.toNumber()
+			//Desiref function works
 			setIsLoading(false)
-			setNumberQuestions(desiredNo)
+			await setNumberQuestions(desiredNo)
 			console.log("The Number Questions", numberQuestions)
+			return desiredNo
 		} catch (error) {
 			console.log(error)
 		}
 	}
+	useEffect(() => {
+		setDesiredNo(desiredNo)
+		console.log("New desired no is", desiredNo)
+	}, [desiredNo])
 
 	const location = useLocation()
 	useEffect(() => {

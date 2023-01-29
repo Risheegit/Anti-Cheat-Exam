@@ -6,6 +6,7 @@ const Scorecard = () => {
 	const [finalScore, setFinalScore] = useState(0)
 	const [numberQuestions, setNumberQuestions] = useState(0)
 	const [timeTaken, setTimeTaken] = useState(0)
+	const [maxQuestions, setMaxQuestions] = useState(0)
 
 	const location = useLocation()
 	useEffect(() => {
@@ -15,15 +16,14 @@ const Scorecard = () => {
 		location.state.numberQuestions &&
 			setNumberQuestions(location.state.numberQuestions)
 		location.state.timeTaken && setTimeTaken(location.state.timeTaken)
-		console.log(currentAccount)
-		console.log(numberQuestions)
-		console.log(finalScore)
-		console.log(timeTaken)
+		location.state.maxQuestions &&
+			setMaxQuestions(location.state.maxQuestions)
 	}, [
 		location.state.currentAccount,
 		location.state.finalQuestions,
 		location.state.numberQuestions,
 		location.state.timeTaken,
+		location.state.maxQuestions,
 	])
 
 	return (
@@ -34,10 +34,10 @@ const Scorecard = () => {
 					Total score: {finalScore}
 				</h1>
 				<h1 className=" flex flex-row font-light text-white text-2xl p-4 pl-12 ">
-					No of questions attempted:5
+					No of questions attempted: {maxQuestions}
 				</h1>
 				<h1 className=" flex flex-row font-light text-white text-2xl p-4 pl-12 ">
-					Time taken: {timeTaken}
+					Time taken (in seconds): {timeTaken / 1000}
 				</h1>
 				<h1 className=" flex flex-row font-light text-white text-2xl p-4 pl-12 ">
 					Total no of questions attempted: {numberQuestions}
