@@ -32,7 +32,7 @@ const Scorecard = () => {
 	return (
 		<div className="bg-black  flex flex-col w-full justify-center h-screen items-center">
 			<p className="text-white">{currentAccount}</p>
-			<div className="bg-gray-600  w-4/12 backdrop-blur-lg rounded-lg items-start flex flex-col p-4 ">
+			<div className="bg-gray-600 md:3/12  w-4/12 backdrop-blur-lg rounded-lg items-start flex flex-col p-4 ">
 				<h1 className=" flex flex-row text-center mx-auto text-white text-3xl p-4 ">
 					Total score: {finalScore}
 				</h1>
