@@ -9,7 +9,8 @@ Moreover, the system allows you to customize the number of questions you need fr
 ## Getting Started
 
 Clone the repository from GitHub: [https://github.com/Risheegit/Anti-Cheat-Exam](https://github.com/Risheegit/Anti-Cheat-Exam)
-Navigate to both the client and server folders and run npm install to install all dependencies and devDependencies in the package.json.
+To install all dependencies and devDependencies in the package.json navigate to both the client and server folders and run
+npm install
 To launch the frontend, navigate to the client folder and run
 npm run dev.
 In a separate terminal, navigate to the server folder and run
