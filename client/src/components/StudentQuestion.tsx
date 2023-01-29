@@ -12,6 +12,7 @@ const StudentQuestion = () => {
 	const maxQuestions = 5
 	const averageTimePerQuestion = 10
 	let startingTime: number
+	let desiredScore: number
 
 	const navigate = useNavigate()
 	const [startTime, setStartTime] = useState(0)
@@ -152,7 +153,7 @@ const StudentQuestion = () => {
 		// console.log(`You are ${sus} sus`)
 		console.log("Values sent are", finalScore, numberQuestions)
 		navigate("/score", {
-			state: { currentAccount, finalScore, numberQuestions },
+			state: { currentAccount, finalScore, numberQuestions, timeTaken },
 		})
 	}
 
@@ -216,8 +217,9 @@ const StudentQuestion = () => {
 			setIsLoading(true)
 			console.log("Your score is ", score.toNumber())
 			setIsLoading(false)
-			setFinalScore(score.toNumber())
-			console.log("Fina Score is ", finalScore)
+			const desiredScore: number = score.toNumber()
+			setFinalScore(desiredScore)
+			console.log("Final Score is ", finalScore)
 		} catch (error: any) {
 			console.log(error.message)
 		}
@@ -240,7 +242,7 @@ const StudentQuestion = () => {
 			setIsLoading(true)
 			console.log("No of questions is ", no.toNumber())
 			console.log("Number to number is ", no.toNumber())
-			const desiredNo = no.toNumber()
+			const desiredNo: number = no.toNumber()
 			setIsLoading(false)
 			setNumberQuestions(desiredNo)
 			console.log("The Number Questions", numberQuestions)
