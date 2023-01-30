@@ -18,6 +18,7 @@ To launch the frontend, navigate to the client folder and run
     npm run dev
 
 In a separate terminal, navigate to the server folder and run
+
     nodemon
     
 Connect to your Metamask wallet and start answering questions by visiting the URL [http://localhost:5173](http://localhost:5173).
